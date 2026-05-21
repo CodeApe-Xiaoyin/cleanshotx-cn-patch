@@ -1,0 +1,5 @@
+build/
+backups/
+*.dylib
+*.zip
+.DS_Store

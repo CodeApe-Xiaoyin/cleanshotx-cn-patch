@@ -1,0 +1,9 @@
+CleanShot X Chinese Patch
+Verified app version: CleanShot X 4.8.8
+Package date: 2026-05-21
+
+Files:
+- CleanShotCN.m: runtime translation source
+- install.sh: build and install patch
+- uninstall.sh: remove patch
+- README.md: usage notes
