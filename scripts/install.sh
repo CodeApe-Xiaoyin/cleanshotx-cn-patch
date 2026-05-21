@@ -4,13 +4,14 @@ set -euo pipefail
 APP_PATH="${1:-/Applications/CleanShot X.app}"
 BUNDLE_ID="pl.maketheweb.cleanshotx"
 SCRIPT_DIR="${0:A:h}"
-SRC="$SCRIPT_DIR/CleanShotCN.m"
-BUILD_DIR="$SCRIPT_DIR/build"
+PROJECT_DIR="${SCRIPT_DIR:h}"
+SRC="$PROJECT_DIR/src/CleanShotCN.m"
+BUILD_DIR="$PROJECT_DIR/build"
 DYLIB_NAME="libCleanShotCN.dylib"
 
 if [[ ! -d "$APP_PATH" ]]; then
   echo "找不到 CleanShot X：$APP_PATH"
-  echo "用法: ./install.sh [CleanShot X.app 路径]"
+  echo "用法: ./scripts/install.sh [CleanShot X.app 路径]"
   exit 1
 fi
 
@@ -28,7 +29,7 @@ INFO_PLIST="$APP_PATH/Contents/Info.plist"
 MACOS_DIR="$APP_PATH/Contents/MacOS"
 TARGET_DYLIB="$MACOS_DIR/$DYLIB_NAME"
 STAMP="$(date +%Y%m%d-%H%M%S)"
-BACKUP_DIR="$SCRIPT_DIR/backups/$STAMP"
+BACKUP_DIR="$PROJECT_DIR/backups/$STAMP"
 
 echo "正在退出 CleanShot X..."
 osascript -e 'tell application "CleanShot X" to quit' >/dev/null 2>&1 || true

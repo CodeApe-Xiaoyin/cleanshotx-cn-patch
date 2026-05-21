@@ -7,7 +7,7 @@ DYLIB_NAME="libCleanShotCN.dylib"
 
 if [[ ! -d "$APP_PATH" ]]; then
   echo "找不到 CleanShot X：$APP_PATH"
-  echo "用法: ./uninstall.sh [CleanShot X.app 路径]"
+  echo "用法: ./scripts/uninstall.sh [CleanShot X.app 路径]"
   exit 1
 fi
 

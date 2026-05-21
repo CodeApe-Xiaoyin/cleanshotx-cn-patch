@@ -45,14 +45,14 @@ xcode-select --install
 然后运行：
 
 ```zsh
-chmod +x install.sh uninstall.sh
-./install.sh
+chmod +x scripts/install.sh scripts/uninstall.sh
+./scripts/install.sh
 ```
 
 如果 CleanShot X 不在默认路径：
 
 ```zsh
-./install.sh "/你的路径/CleanShot X.app"
+./scripts/install.sh "/你的路径/CleanShot X.app"
 ```
 
 ## 权限说明
@@ -68,7 +68,7 @@ chmod +x install.sh uninstall.sh
 ## 卸载
 
 ```zsh
-./uninstall.sh
+./scripts/uninstall.sh
 ```
 
 卸载脚本会移除动态库注入配置和汉化动态库，并重新签名应用。
@@ -78,8 +78,8 @@ chmod +x install.sh uninstall.sh
 将本仓库复制或克隆到新设备，然后重新运行：
 
 ```zsh
-chmod +x install.sh uninstall.sh
-./install.sh
+chmod +x scripts/install.sh scripts/uninstall.sh
+./scripts/install.sh
 ```
 
 如果 CleanShot X 官方更新后汉化部分失效，也可以重新运行安装脚本；如果新版本改了界面文本，需要补充 `CleanShotCN.m` 中的翻译表。
@@ -88,11 +88,15 @@ chmod +x install.sh uninstall.sh
 
 ```text
 .
-├── CleanShotCN.m   # 运行时汉化源码和翻译表
-├── install.sh      # 安装脚本
-├── uninstall.sh    # 卸载脚本
-├── VERSION.txt     # 已验证版本信息
-└── README.md       # 项目说明
+├── README.md              # 项目说明
+├── LICENSE                # 开源协议
+├── src/
+│   └── CleanShotCN.m      # 运行时汉化源码和翻译表
+├── scripts/
+│   ├── install.sh         # 安装脚本
+│   └── uninstall.sh       # 卸载脚本
+└── docs/
+    └── VERSION.txt        # 已验证版本信息
 ```
 
 ## 免责声明
