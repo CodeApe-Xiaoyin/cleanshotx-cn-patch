@@ -20,7 +20,8 @@
 - 汉化快捷键列表中的大部分项目。
 - 提供一键安装和卸载脚本。
 - 安装时自动备份 `Info.plist`。
-- 安装后自动重新签名应用，并重置旧的权限记录，方便重新授权。
+- 安装后自动重新签名应用，默认保留已有系统权限记录。
+- 提供设置修复脚本，用于处理快捷键或设置保存后又丢失的问题。
 
 ## 原理
 
@@ -55,6 +56,23 @@ chmod +x scripts/install.sh scripts/uninstall.sh
 ./scripts/install.sh "/你的路径/CleanShot X.app"
 ```
 
+如果权限记录已经正常，安装脚本默认不会重置权限。只有在权限确实异常时，才建议手动重置：
+
+```zsh
+RESET_TCC=1 ./scripts/install.sh
+```
+
+## 修复设置或快捷键丢失
+
+如果出现快捷键、截图后动作、保存位置等设置过一段时间丢失的情况，运行：
+
+```zsh
+chmod +x scripts/repair-preferences.sh
+./scripts/repair-preferences.sh
+```
+
+脚本会先备份退出前设置文件，再退出 CleanShot X、备份退出后设置文件、清理设置文件上的异常隔离属性、修复权限位，并重启 macOS 偏好设置缓存。它不会删除你的设置，也不会重置屏幕录制、辅助功能或输入监听权限。
+
 ## 权限说明
 
 安装后，macOS 可能会要求重新授权 CleanShot X：
@@ -63,7 +81,7 @@ chmod +x scripts/install.sh scripts/uninstall.sh
 - 辅助功能
 - 输入监听
 
-这是正常现象。安装脚本会重新签名 CleanShot X，macOS 会把它视为新的代码身份。请在系统设置中重新允许 CleanShot X。
+安装脚本会重新签名 CleanShot X，macOS 有时会把它视为新的代码身份。新版脚本默认不主动重置权限；如果系统仍提示重新授权，请在系统设置中重新允许 CleanShot X。
 
 ## 卸载
 
@@ -72,6 +90,12 @@ chmod +x scripts/install.sh scripts/uninstall.sh
 ```
 
 卸载脚本会移除动态库注入配置和汉化动态库，并重新签名应用。
+
+如果你希望卸载时一并清掉旧权限记录：
+
+```zsh
+RESET_TCC=1 ./scripts/uninstall.sh
+```
 
 ## 换设备或重装后使用
 
@@ -94,6 +118,7 @@ chmod +x scripts/install.sh scripts/uninstall.sh
 │   └── CleanShotCN.m      # 运行时汉化源码和翻译表
 ├── scripts/
 │   ├── install.sh         # 安装脚本
+│   ├── repair-preferences.sh # 修复设置保存异常
 │   └── uninstall.sh       # 卸载脚本
 └── docs/
     └── VERSION.txt        # 已验证版本信息
