@@ -315,10 +315,42 @@ static void CNTranslateMenu(NSMenu *menu) {
     }
 }
 
+static BOOL CNSkipMutableOrShortcutView(NSView *view) {
+    NSString *className = NSStringFromClass(view.class);
+    NSArray<NSString *> *blocked = @[
+        @"KeyboardShortcut",
+        @"TokenField",
+        @"SecureTextField",
+        @"SearchField",
+        @"ComboBox",
+        @"TextView"
+    ];
+
+    for (NSString *part in blocked) {
+        if ([className rangeOfString:part options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            return YES;
+        }
+    }
+
+    if (view.identifier.length > 0) {
+        NSString *identifier = view.identifier;
+        if ([identifier rangeOfString:@"shortcut" options:NSCaseInsensitiveSearch].location != NSNotFound ||
+            [identifier rangeOfString:@"hotkey" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+            return YES;
+        }
+    }
+
+    return NO;
+}
+
 static void CNTranslateView(NSView *view) {
+    if (CNSkipMutableOrShortcutView(view)) {
+        return;
+    }
+
     if ([view isKindOfClass:[NSTextField class]]) {
         NSTextField *field = (NSTextField *)view;
-        if (!field.isEditable) {
+        if (!field.isEditable && [field isMemberOfClass:[NSTextField class]]) {
             NSString *translated = CNTranslate(field.stringValue);
             if (translated && ![translated isEqualToString:field.stringValue]) {
                 field.stringValue = translated;

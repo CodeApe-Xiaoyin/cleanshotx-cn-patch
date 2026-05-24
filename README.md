@@ -22,6 +22,7 @@
 - 安装时自动备份 `Info.plist`。
 - 安装后自动重新签名应用，默认保留已有系统权限记录。
 - 提供设置修复脚本，用于处理快捷键或设置保存后又丢失的问题。
+- 提供设置快照保存/恢复脚本，避免快捷键被重置后需要手工重配。
 
 ## 原理
 
@@ -73,6 +74,18 @@ chmod +x scripts/repair-preferences.sh
 
 脚本会先备份退出前设置文件，再退出 CleanShot X、备份退出后设置文件、清理设置文件上的异常隔离属性、修复权限位，并重启 macOS 偏好设置缓存。它不会删除你的设置，也不会重置屏幕录制、辅助功能或输入监听权限。
 
+如果你已经重新设置好快捷键，建议立刻保存一份设置快照：
+
+```zsh
+./scripts/save-preferences-snapshot.sh
+```
+
+以后如果快捷键再次被 CleanShot 写空，可以直接恢复：
+
+```zsh
+./scripts/restore-preferences-snapshot.sh
+```
+
 ## 权限说明
 
 安装后，macOS 可能会要求重新授权 CleanShot X：
@@ -119,6 +132,8 @@ chmod +x scripts/install.sh scripts/uninstall.sh
 ├── scripts/
 │   ├── install.sh         # 安装脚本
 │   ├── repair-preferences.sh # 修复设置保存异常
+│   ├── save-preferences-snapshot.sh # 保存当前设置快照
+│   ├── restore-preferences-snapshot.sh # 恢复设置快照
 │   └── uninstall.sh       # 卸载脚本
 └── docs/
     └── VERSION.txt        # 已验证版本信息

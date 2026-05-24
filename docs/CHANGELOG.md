@@ -1,5 +1,10 @@
 # 更新日志
 
+## v4.8.8-cn.3
+
+- 运行时汉化跳过 CleanShot 的快捷键输入/识别控件，避免翻译逻辑影响快捷键保存。
+- 新增 `scripts/save-preferences-snapshot.sh` 和 `scripts/restore-preferences-snapshot.sh`，可在快捷键正常时保存设置快照，并在配置被写空后恢复。
+
 ## v4.8.8-cn.2
 
 - 新增 `scripts/repair-preferences.sh`，用于修复快捷键或设置保存后又丢失的问题，并保留退出前/退出后两份偏好快照。
