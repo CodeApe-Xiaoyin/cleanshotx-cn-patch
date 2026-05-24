@@ -1,5 +1,10 @@
 # 更新日志
 
+## v4.8.8-cn.4
+
+- 新增 `scripts/restart-shortcuts.sh`，用于重启 CleanShot 并重新注册全局快捷键。
+- 新增 `scripts/fix-shortcut-permissions.sh`，用于修复快捷键设置仍在但按下无效的问题；脚本只重置辅助功能和输入监听权限，不重置屏幕录制权限。
+
 ## v4.8.8-cn.3
 
 - 运行时汉化跳过 CleanShot 的快捷键输入/识别控件，避免翻译逻辑影响快捷键保存。

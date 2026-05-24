@@ -23,6 +23,7 @@
 - 安装后自动重新签名应用，默认保留已有系统权限记录。
 - 提供设置修复脚本，用于处理快捷键或设置保存后又丢失的问题。
 - 提供设置快照保存/恢复脚本，避免快捷键被重置后需要手工重配。
+- 提供快捷键权限修复脚本，用于处理快捷键设置仍在但按下无效的问题。
 
 ## 原理
 
@@ -86,6 +87,20 @@ chmod +x scripts/repair-preferences.sh
 ./scripts/restore-preferences-snapshot.sh
 ```
 
+如果快捷键设置还在，但按下后没有任何反应，先让 CleanShot 重新注册快捷键：
+
+```zsh
+./scripts/restart-shortcuts.sh
+```
+
+如果仍然无效，修复全局快捷键相关权限：
+
+```zsh
+./scripts/fix-shortcut-permissions.sh
+```
+
+这个脚本只重置“辅助功能”和“输入监听”，不重置屏幕录制权限。运行后需要到系统设置里重新允许 CleanShot X。
+
 ## 权限说明
 
 安装后，macOS 可能会要求重新授权 CleanShot X：
@@ -132,6 +147,8 @@ chmod +x scripts/install.sh scripts/uninstall.sh
 ├── scripts/
 │   ├── install.sh         # 安装脚本
 │   ├── repair-preferences.sh # 修复设置保存异常
+│   ├── restart-shortcuts.sh # 重启快捷键注册
+│   ├── fix-shortcut-permissions.sh # 修复快捷键监听权限
 │   ├── save-preferences-snapshot.sh # 保存当前设置快照
 │   ├── restore-preferences-snapshot.sh # 恢复设置快照
 │   └── uninstall.sh       # 卸载脚本
